@@ -39,16 +39,33 @@ function createBlock(numBlock) {
     btPlay.style.display = "none";
     let card = [];
     let label = [];
-    let breakRow = 5;
+    let image = [];
+    let sourceImage = []
+    function makeRandom() {
+
+    }
+    for (let i = 0; i <= 9; i++) {
+        sourceImage[i] =
+        {
+            id: i,
+            src: "image/block" + i + ".jpeg",
+            countClick: 0
+        }
+    }
+
+
+    console.log(sourceImage)
+    let countCard = [];
     let distanceTop = 0;
     let count = 0;
     for (let index = 0; index <= numBlock; index++) {
         let khoangCach = 0;
-        if (index >= 1 && index <= numBlock) {
+        if (index >= 0 && index < numBlock) {
             card[index] = document.createElement("div");
             background.appendChild(card[index]);
             label[index] = document.createElement("p");
             card[index].appendChild(label[index]);
+//label
             label[index].innerText = "Block" + index;
             label[index].style.position = "absolute";
             label[index].style.top = "30px";
@@ -56,7 +73,7 @@ function createBlock(numBlock) {
             label[index].style.textAlign = "center";
             label[index].style.fontSize = "30px";
             label[index].style.color = "white";
-
+//red card
             card[index].style.width = "160px";
             card[index].style.height = "160px";
             card[index].style.background = "red";
@@ -70,13 +87,35 @@ function createBlock(numBlock) {
                 distanceTop += 200;
                 count = 0;
             }
-            card[index].addEventListener("click", ()=>{
-                alert(card[index].innerText)
-                card[index]= document.createElement("img")
-                card[index].src = "./image/block1.jpg"
+
+            //event card
+            card[index].addEventListener("click", () => {
+                image[index] = document.createElement("img")
+                card[index].appendChild(image[index]);
+                let newArr = []
+                let img = randomImg()
+                newArr.push(img)
+                image[index].src = randomImg().src
+                image[index].style.width = "100%"
+                image[index].style.height = "100%"
+                image[index].style.objectFit = "cover"
+                // image[index].value = /
+                label[index].style.display = "none"
             })
-            console.log(count);
         }
     }
+    function randomImg() {
+        var randomIndex = Math.floor(Math.random() * sourceImage.length);
+        var source_temp = sourceImage[randomIndex];
+        if (source_temp.time == 1) {
+            sourceImage.splice(randomIndex, 1);
+        }
+        source_temp.time++;
+        return source_temp;
+    }
+    for(let i =0; i<9; i++){
+        console.log(randomImg())
+
+    }
 }
-//Tạo ra một biến đếm, khi biến đếm = 5 thì distanceTop + 200 và reset biến đếm
+//Tạo ,5 một biến đếm, khi biến đếm = 5 thì distanceTop + 200 và reset biến đếm
