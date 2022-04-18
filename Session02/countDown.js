@@ -27,7 +27,26 @@ function countDown(second) {
       textLabel.innerText = second;
       --second
     }
-    down()
+    down()  
   }, 1000);
+  
+}
+function clockTime(second){
+  let clockLabel = document.createElement("p")
+  countClock = 0;
+  let count=second
+  let loopTime = setInterval(()=> {
+      countClock++
+      --second
+      // console.log(countClock)
+      clockLabel.innerText = "Clock Time is: " +countClock
+    if(second==0){
+      clearInterval(loopTime)
+    }
+    console.log(second)
+  }, 1000);
+  document.body.appendChild(clockLabel)
+  console.log(clockTime)
 }
 countDown(value);
+clockTime(value)
