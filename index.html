@@ -113,15 +113,7 @@ function playGame() {
     play.style.zIndex = '999'
     play.style.cursor = "pointer"
     play.addEventListener("click", () => {
-        createGameBoard();
-        createCards(20);
-        setTime = setInterval(() => {
-            --time
-            showTime.textContent = "Time: " + time
-            time == 0 ? clearInterval(setTime) + createloseBG() + playAgain() : ""
-        }, 1000);
-
-        play.style.display = "none"
+        location.reload()
     })
 }
 function createloseBG() {
