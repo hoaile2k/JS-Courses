@@ -30,52 +30,52 @@ showRules.style.width = '200px'
 let sourceImage = [
     {
         id: 1,
-        src: "image/block" + 1 + ".jpeg",
+        src: "./Session02/image/block" + 1 + ".jpeg",
         countTime: 0
     },
     {
         id: 2,
-        src: "image/block" + 2 + ".jpeg",
+        src: "./Session02/image/block" + 2 + ".jpeg",
         countTime: 0
     },
     {
         id: 3,
-        src: "image/block" + 3 + ".jpeg",
+        src: "./Session02/image/block" + 3 + ".jpeg",
         countTime: 0
     },
     {
         id: 4,
-        src: "image/block" + 4 + ".jpeg",
+        src: "./Session02/image/block" + 4 + ".jpeg",
         countTime: 0
     },
     {
         id: 5,
-        src: "image/block" + 5 + ".jpeg",
+        src: "./Session02/image/block" + 5 + ".jpeg",
         countTime: 0
     },
     {
         id: 6,
-        src: "image/block" + 6 + ".jpeg",
+        src: "./Session02/image/block" + 6 + ".jpeg",
         countTime: 0
     },
     {
         id: 7,
-        src: "image/block" + 7 + ".jpeg",
+        src: "./Session02/image/block" + 7 + ".jpeg",
         countTime: 0
     },
     {
         id: 8,
-        src: "image/block" + 8 + ".jpeg",
+        src: "./Session02/image/block" + 8 + ".jpeg",
         countTime: 0
     },
     {
         id: 9,
-        src: "image/block" + 9 + ".jpeg",
+        src: "./Session02/image/block" + 9 + ".jpeg",
         countTime: 0
     },
     {
         id: 0,
-        src: "image/block" + 0 + ".jpeg",
+        src: "./Session02/image/block" + 0 + ".jpeg",
         countTime: 0
     },
 ]
@@ -92,7 +92,7 @@ function createGameBoard() {
     background.appendChild(gameBoard)
     gameBoard.style.width = "960px"
     gameBoard.style.height = "660px"
-    gameBoard.style.backgroundImage = "url(image/background.jpeg)"
+    gameBoard.style.backgroundImage = "url(./Session02/image/background.jpeg)"
     gameBoard.style.backgroundSize = "cover"
     gameBoard.style.margin = "auto"
     gameBoard.style.top = "5%"
@@ -211,7 +211,7 @@ function createCards(numCard) {
         image[index].style.top = distanceTop + card.top
         image[index].style.left = distanceLeft + card.left
         image[index].style.cursor = "pointer"
-        image[index].src = "image/logo.png"
+        image[index].src = "./Session02/image/logo.png"
 
         labelCard[index] = document.createElement("h1")
         image[index].appendChild(labelCard[index])
@@ -281,8 +281,8 @@ function cardClick(index) {
                 countClick.splice(0, 2)
             }
             if (countClick.length >= 2) {
-                image[countClick[0]].src = "image/logo.png"
-                image[countClick[1]].src = "image/logo.png"
+                image[countClick[0]].src = "./Session02/logo.png"
+                image[countClick[1]].src = "./Session02/image/logo.png"
                 score -= 50
                 showScore.textContent = "Score: " + score
                 if (score == 0) {
