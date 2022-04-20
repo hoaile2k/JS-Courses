@@ -13,29 +13,34 @@ class Game extends Node {
 
     }
     _init() {
-        this.scoreValue = 1000
+        this.scoreValue = 100
         this._createCards();
         this._createScore();
         this._resetGame();
-        this.countRight = []
+        this.countRight = 0
 
+    }
+    _shuffleCards() {
+        let randomCards = new Array(20)
+        for (let i = 0; i < 20; i++) {
+            randomCards[i] = i % (20 / 2)
+        }
+        randomCards.sort(() => {
+            return 0.5 - Math.random()
+        })
+        randomCards.sort()
+        return randomCards;
     }
     _createCards(numberCards) {
         let cards = [];
         let card;
-        let randomCards = new Array(20)
-        for(let i = 0; i< 20; i++){
-            randomCards[i] = i%(20/2)
-        }
-        randomCards.sort(()=>{
-            return 0.5 - Math.random()
-        })
-        for  (let index = 0; index < 20; index++) {
+        let randomCards = this._shuffleCards()
+        for (let index = 0; index < 20; index++) {
             card = new Card(index);
             let col = index % 5
             let row = Math.floor(index / 5)
             // card.elm.style.border = "1px solid"
-            cards[index] = index              
+            cards[index] = index
             this.addChild(card)
             card.x = col * 160
             card.y = row * 160
@@ -44,10 +49,10 @@ class Game extends Node {
             card.setValue(randomCards[index]);
             card.elm.addEventListener("click", this.onClickCard.bind(this, card))
         }
-        
-        
+
+
     }
-    onClickCard(card) {      
+    onClickCard(card) {
         if (!this.canClick) return;
         if (card === this.firstCard) return;
         card.open()
@@ -65,17 +70,17 @@ class Game extends Node {
     _createScore() {
         this.score = new Label()
         this.addChild(this.score)
-        this.score.elm.style.position ="absolute"
+        this.score.elm.style.position = "absolute"
         this.score.elm.style.top = "-65px"
         this.score.elm.style.right = "328px"
         this.score.elm.style.fontSize = "30px"
         this.score.text = "Score: " + this.scoreValue
     }
-   
+
     compareCard(firstCard, secondCard) {
         // console.log(firstCard + " - " + secondCard)
-        if (firstCard.value == secondCard.value) {
-            setTimeout(() => {
+        setTimeout(() => {
+            if (firstCard.value == secondCard.value) {
                 firstCard.close()
                 secondCard.close()
                 this.removeChild(firstCard)
@@ -84,14 +89,13 @@ class Game extends Node {
                 this.secondCard = null
                 this.canClick = true
                 this.scoreValue += 100
-                this.score.text = "Score: " +this.scoreValue
-                this.countRight.push(firstCard)
-                if(this.countRight.length===10){
-                    this._isWinning()
+                this.score.text = "Score: " + this.scoreValue
+                this.countRight ++
+                if (this.countRight === 10) {
+                    this.status("You are Winning")
                 }
-            }, 1000)
-        } else {
-            setTimeout(() => {
+            }
+            else {
                 // console.log("false")
                 this.firstCard = null
                 this.secondCard = null
@@ -99,43 +103,27 @@ class Game extends Node {
                 secondCard.hide()
                 this.canClick = true
                 this.scoreValue -= 50
-                this.score.text = "Score: " +this.scoreValue
-                if(this.scoreValue===0){
-                    this._isLosing()
+                this.score.text = "Score: " + this.scoreValue
+                if (this.scoreValue === 0) {
+                    this.status("You are Losing")
                 }
-            }, 1000);
-        }
+            }
+        }, 1000);
     }
-    _isWinning(){
+    status(value) {
         let win = new Node();
         win.width = 800
         win.height = 640
         win.elm.style.background = "rgba(0,0,0,0.7)"
         let label = new Label();
-        label.elm.textContent = "You Are Winning"
+        label.elm.innerHTML = value +"</br>Your Score: " + this.scoreValue
         label.width = 800
-        label.fontSize = 50
         label.elm.style.textAlign = 'center'
         label.color = "white"
         label.elm.style.top = '40%'
-        this.win = win
-        this.label = label
-        this.addChild(this.win)
-        this.addChild(this.label)
-    }
-    _isLosing(){
-        let win = new Node();
-        win.width = 800
-        win.height = 640
-        win.elm.style.background = "rgba(0,0,0,0.7)"
-        let label = new Label();
-        label.elm.textContent = "You Are Losing"
-        label.width = 800
-        label.fontSize = 50
-        label.elm.style.textAlign = 'center'
-        label.elm.style.top = '40%'
-
-        label.color = "white"
+        label.elm.style.transform = "scale(1.5)"
+        label.elm.style.transition = "3s"
+        // label.fontSize = 50
         this.win = win
         this.label = label
         this.addChild(this.win)
@@ -144,35 +132,26 @@ class Game extends Node {
     _playGame() {
         this.play = new Label()
         this.addChild(this.play)
-        this.play.elm.style.position ="absolute"
-        this.play.elm.style.top = "50%"
-        this.play.elm.style.right = "42%"
+        this.play.elm.style.position = "absolute"
+        this.play.elm.style.bottom = "-100px"
+        this.play.elm.style.right = "340px"
         this.play.elm.style.fontSize = "30px"
         this.play.text = "Play Game"
         this.play.color = "red"
-        this.play.elm.style.padding = "5px"
+        this.play.elm.style.padding = "5px 20px"
         this.play.elm.style.borderRadius = "10px"
         this.play.elm.style.background = "cyan"
         this.play.elm.style.cursor = "pointer"
-        this.play.elm.addEventListener("click",()=>{
+        this.play.elm.addEventListener("click", () => {
             document.getElementsByTagName("div")[0].innerHTML = ""
             this._init()
         })
     }
     _resetGame() {
-        this.reset = new Label()
-        this.addChild(this.reset)
-        this.reset.elm.style.position ="absolute"
-        this.reset.elm.style.bottom = "-100px"
-        this.reset.elm.style.right = "340px"
-        this.reset.elm.style.fontSize = "30px"
-        this.reset.text = "Replay"
-        this.reset.color = "red"
-        this.reset.elm.style.padding = "15px"
-        this.reset.elm.style.borderRadius = "10px"
-        this.reset.elm.style.background = "cyan"
-        this.reset.elm.style.cursor = "pointer"
-        this.reset.elm.addEventListener("click",()=>{
+        this._playGame()
+        this.play.text = "Replay"
+        this.play.color = "navy"
+        this.play.elm.addEventListener("click", () => {
             document.getElementsByTagName("div")[0].innerHTML = ""
             this._init()
         })
@@ -188,4 +167,3 @@ game.y = 50
 game.elm.style.backgroundImage = "url(./images/trucxanh_bg.jpg)"
 
 document.body.appendChild(game.elm);
-// cards.img.appendChild(game.img)

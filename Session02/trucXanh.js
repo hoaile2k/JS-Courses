@@ -1,3 +1,4 @@
+//Done
 let background = document.createElement("div")
 let showScore = document.createElement("h1")
 let showTime = document.createElement("h1")
@@ -114,6 +115,7 @@ function playGame() {
         play.style.display = "none"
     })
 }
+function playAgain(){}
 function createloseBG() {
     let loseBackground = document.createElement("div")
     gameBoard.appendChild(loseBackground)
@@ -238,7 +240,6 @@ function createCards(numCard) {
             cardClick(index)
         })
     }
-
 }
 function clearCards() {
     image = []

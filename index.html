@@ -113,7 +113,7 @@ function playGame() {
     play.style.zIndex = '999'
     play.style.cursor = "pointer"
     play.addEventListener("click", () => {
-        createGameBoard();
+         createGameBoard();
         createCards(20);
         setTime = setInterval(() => {
             --time
@@ -123,6 +123,9 @@ function playGame() {
 
         play.style.display = "none"
     })
+}
+function playAgain(){
+    location.reload()
 }
 function createloseBG() {
     let loseBackground = document.createElement("div")
@@ -149,6 +152,9 @@ function createloseBG() {
     labelTryAgain.style.width = "100%"
     labelTryAgain.style.fontSize = "60px"
     labelTryAgain.style.color = "red"
+    labelTryAgain.addEventListener("click",()=>{
+        playAgain()
+    })
 }
 function createWinBG() {
     let loseBackground = document.createElement("div")
@@ -175,6 +181,9 @@ function createWinBG() {
     labelTryAgain.style.width = "100%"
     labelTryAgain.style.fontSize = "60px"
     labelTryAgain.style.color = "darkturquoise"
+    labelTryAgain.addEventListener("click",()=>{
+        playAgain()
+    })
 }
 function createCards(numCard) {
     let distanceLeft = 77.5;
