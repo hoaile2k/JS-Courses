@@ -19,10 +19,10 @@ class Game extends Node {
         this._resetGame();
         this.firstCard = null;
         this.secondCard = null;
-        this.trueAudio = new Audio("./audio/trueAudio.mp3")
-        this.falseAudio = new Audio("./audio/audioFalse.mp3")
-        this.winAudio = new Audio("./audio/audioWin.mp3")
-        this.loseAudio = new Audio("./audio/audioLose.mp3")
+        this.trueAudio = new Audio("../audio/trueAudio.mp3")
+        this.falseAudio = new Audio("../audio/audioFalse.mp3")
+        this.winAudio = new Audio("../audio/audioWin.mp3")
+        this.loseAudio = new Audio("../audio/audioLose.mp3")
         this._soundGame();
         this.countRight = 0
         this.canClickReset = false
