@@ -46,7 +46,6 @@ class Game extends Node {
         return randomCards;
     }
     _createCards(numberCards) {
-        
         let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
         let cards = [];
         let card;
@@ -63,7 +62,6 @@ class Game extends Node {
                 ease: Back.easeIn,
                 x: 330,
                 y: 200,
-                zIndex: 100,
                 duration: 0.2
             }, "0.1");
             this.addChild(card)
