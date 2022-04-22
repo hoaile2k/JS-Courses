@@ -47,17 +47,20 @@ export class Card extends Node {
         // console.log(this.arrImage)
         this.sprite.path = "./images/trucxanh" + value + ".jpg";
     }
-
     open() {
+        let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
+        tl.to(this.elm, { rotateY:180 , duration: 0.5 },0);
+        console.log(this.sprite)
+        tl.play();
         this.label.elm.style.display = "none"
-        // this.cover.elm.style.WebkitTransitionDuration = '0.5s'
-        // // this.cover.elm.style.webkitTransform = '10deg'
         this.cover.elm.style.backgroundColor = "unset"
         
     }
     close() {
     }
     hide() {
+        let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
+        tl.to(this.elm, { rotateY:0 , duration: 0.5 });
         this.label.elm.style.display = "block"
         this.cover.elm.style.backgroundColor = "orange"
     }

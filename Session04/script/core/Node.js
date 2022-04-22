@@ -13,10 +13,17 @@ export class Node { // entity
         this._scale = 0
         this._rotateY = 0
         this._rotate = 0
+        this._opacity = 1
         this.elm = this._createElement();
         this.children = [];
     }
-
+    get opacity() {
+        return this._opacity;    
+    }
+    set opacity(value) {
+        this._opacity = value;
+        this.elm.style.opacity = this._opacity
+    }
     get x() { return this._x; }
     set x(value) {
         this._x = value;
@@ -100,6 +107,7 @@ export class Node { // entity
         this._zIndex = value;
         this.elm.style.zIndex = this._zIndex
     }
+    
     _createElement() {
         let elm = document.createElement("div");
         elm.style.position = "absolute";
@@ -115,7 +123,4 @@ export class Node { // entity
         this.elm.removeChild(node.elm);
         this.children.splice(index, 1);
     }
-
-
-
 }
