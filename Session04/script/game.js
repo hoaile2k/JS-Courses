@@ -2,30 +2,27 @@ import { Node } from "./core/Node.js";
 import { Sprite } from "./core/Sprite.js";
 import { Card } from "./components/Card.js";
 import { Label } from "./core/Label.js";
+
+
 class Game extends Node {
     constructor() {
         super();
-        
         this.canClick = true;
         this.canClickReset = true
-        // this.endGame()
-        this._playGame()
-        // this._init()
+        this._init()
     }
     _init() {
-        this.audio = new Audio("https://s171.123apps.com/ajoiner/d/final_626219ea8d186.mp3")
+        this.audio = new Audio("../audio/audioStart.mp3")
         this.scoreValue = { value: 100 }
         this._createCards();
         this._createScore();
         this._resetGame();
         this.firstCard = null;
         this.secondCard = null;
-        // this.clickAudio = new Audio("https://cdn.pixabay.com/download/audio/2022/03/22/audio_e350ea2393.mp3?filename=surprise-sound-effect-99300.mp3")
-        this.trueAudio = new Audio("https://s174.123apps.com/ajoiner/d/final_62621a5dbc09e.mp3")
-        this.falseAudio = new Audio("https://cdn.pixabay.com/download/audio/2022/03/01/audio_274b32a58a.mp3?filename=slash-21834.mp3")
-        this.winAudio = new Audio("https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3?filename=success-fanfare-trumpets-6185.mp3")
-        this.loseAudio = new Audio("https://cdn.pixabay.com/download/audio/2021/08/04/audio_c6ccf3232f.mp3?filename=negative_beeps-6008.mp3")
-
+        this.trueAudio = new Audio("../audio/trueAudio.mp3")
+        this.falseAudio = new Audio("../audio/audioFalse.mp3")
+        this.winAudio = new Audio("../audio/audioWin.mp3")
+        this.loseAudio = new Audio("../audio/audioLose.mp3")
         this._soundGame();
         this.countRight = 0
         this.canClickReset = false
@@ -46,6 +43,7 @@ class Game extends Node {
         return randomCards;
     }
     _createCards(numberCards) {
+
         let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
         let cards = [];
         let card;
@@ -62,6 +60,7 @@ class Game extends Node {
                 ease: Back.easeIn,
                 x: 330,
                 y: 200,
+                zIndex: 100,
                 duration: 0.2
             }, "0.1");
             this.addChild(card)
@@ -111,10 +110,6 @@ class Game extends Node {
             this.trueAudio.play()
             firstCard.zIndex = 200
             secondCard.zIndex = 200
-            tl.to(firstCard, { x: 200, y: 250, scale: 1.5, duration: 0.5 }, "<");
-            tl.to(secondCard, { x: 440, y: 250, scale: 1.5, duration: 0.5 }, "<");
-            tl.to(firstCard, {  scale: 1, opacity: 0, duration: 1 }, "0.5");
-            tl.to(secondCard, {  scale: 1, opacity: 0, duration: 1 }, "0.5");
             tl.to(this.scoreValue, 1, {
                 value: "+=100",
                 roundProps: {
@@ -124,6 +119,10 @@ class Game extends Node {
                     this.score.text = "Score: " + this.scoreValue.value;
                 }
             })
+            tl.to(firstCard, { x: 200, y: 250, scale: 1.5, duration: 0.5 }, "<");
+            tl.to(secondCard, { x: 440, y: 250, scale: 1.5, duration: 0.5 }, "<");
+            tl.to(firstCard, { scale: 1, opacity: 0, duration: 1 }, "0.5");
+            tl.to(secondCard, { scale: 1, opacity: 0, duration: 1 }, "0.5");
             console.log(this.scoreValue)
             // this.scoreValue += 100
             // this.score.text = "Score: " + this.scoreValue
@@ -139,6 +138,7 @@ class Game extends Node {
                 this.countRight++
                 if (this.countRight === 10) {
                     this.status("You are Winning")
+                    this.victoryScreen()
                 }
             }, 1500);
         }
@@ -160,12 +160,12 @@ class Game extends Node {
                     }
                 })
             }, 1000);
-            console.log(this.scoreValue.value-50)
-            if (this.scoreValue.value-50 == 0) {
+            console.log(this.scoreValue.value - 50)
+            if (this.scoreValue.value - 50 == 0) {
                 this.status("You are Losing!!")
                 this.loseAudio.play()
             }
-            
+
         }
 
     }
@@ -190,8 +190,39 @@ class Game extends Node {
         this.addChild(this.win)
         this.addChild(this.label)
     }
-    endGame(){
-        
+    victoryScreen() {
+        let coins = []
+        let positionX = []
+        let positionY = []
+        let tl = gsap.timeline({ repeat: 5 });
+        for(let i = 0; i<=70; i++){
+            positionX.push(i*i)
+            positionY.push(i*10)
+        }
+        positionX.sort(()=>{
+            return 0.5 - Math.random()
+        })
+        positionY.sort(()=>{
+            return 0.5 - Math.random()
+        })
+        for(let i = 0; i<=70; i++){
+            let coin = new Node()
+            let col = positionX[i]
+            let row = positionY[i]
+            coin.width = 100
+            coin.height = 100
+            coin.x = col
+            coin.y = row
+            coin.scale = 0.3
+            coin.background = "../images/coin.png"
+            coin.elm.style.backgroundSize = "cover"
+            coin.zIndex = 1000
+            this.coin = coin
+            this.addChild(this.coin)
+            coins.push(coin)
+            tl.to(coins[i], {x: positionX[i], y:1000, duration: 10 }, "<");
+
+        }
     }
     _playGame() {
         this.play = new Label()
@@ -206,7 +237,7 @@ class Game extends Node {
         this.play.elm.style.borderRadius = "10px"
         this.play.elm.style.background = "cyan"
         this.play.elm.style.cursor = "pointer"
-        if(!this.canClickReset) return;
+        if (!this.canClickReset) return;
         this.play.elm.addEventListener("click", () => {
             document.getElementsByTagName("div")[0].innerHTML = ""
             this._init()
