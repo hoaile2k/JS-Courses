@@ -10,7 +10,7 @@ class Game extends Node {
         this.canClick = true;
         this.canClickReset = true
         this._playGame()
-        this._init()
+        // this._init()
     }
     _init() {
         this.audio = new Audio("../audio/audioStart.mp3")
@@ -137,7 +137,7 @@ class Game extends Node {
                 this.firstCard = null; this.secondCard = null
                 this.canClick = true
                 this.countRight++
-                if (this.countRight === 1 ) {
+                if (this.countRight === 10) {
                     this.status("You are Winning")
                     this.victoryScreen()
                 }
@@ -196,9 +196,9 @@ class Game extends Node {
         let positionX = []
         let positionY = []
         let tl = gsap.timeline({ repeat: 5 });
-        for(let i = 0; i<=100; i++){
-            positionX.push(i*7)
-            positionY.push(i*5)
+        for(let i = 0; i<=70; i++){
+            positionX.push(i*i)
+            positionY.push(i*10)
         }
         positionX.sort(()=>{
             return 0.5 - Math.random()
@@ -206,7 +206,7 @@ class Game extends Node {
         positionY.sort(()=>{
             return 0.5 - Math.random()
         })
-        for(let i = 0; i<=100; i++){
+        for(let i = 0; i<=70; i++){
             let coin = new Node()
             let col = positionX[i]
             let row = positionY[i]
@@ -221,7 +221,7 @@ class Game extends Node {
             this.coin = coin
             this.addChild(this.coin)
             coins.push(coin)
-            tl.to(coins[i], {x: positionX[i], y:580, duration: 10 }, "<");
+            tl.to(coins[i], {x: positionX[i], y:1000, duration: 10 }, "<");
 
         }
     }
@@ -240,12 +240,7 @@ class Game extends Node {
         this.play.elm.style.cursor = "pointer"
         if (!this.canClickReset) return;
         this.play.elm.addEventListener("click", () => {
-            // document.getElementsByTagName("div")[0].innerHTML = ""
-            // let game = Game()
-            console.log(this)
-            for(let i = 0 ;i<=19;i++){
-                // this.c
-            }
+            document.getElementsByTagName("div")[0].innerHTML = ""
             this._init()
             this.winAudio.pause()
         })
