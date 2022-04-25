@@ -120,7 +120,6 @@ class Game extends Node {
                 setTimeout(() => {
                     this.onFirstCard = null
                     this.onSecondCard = null
-                    this.canClick = true
                     this.score.score += 100
                     this.countTrue += 1
                     this.audioTrue.play()
@@ -133,10 +132,12 @@ class Game extends Node {
                             this.score.text = "Score: " + this.scoreValue.value;
                         },
                         onComplete: () => {
+                            this.canClick = true
                             if (this.countTrue == 10) {
                                 this.endGame("You are winning","win")
                                 this.victoryScreen()
                                 this.audioWin.play()
+
                             }
                         }
                     })
@@ -149,7 +150,6 @@ class Game extends Node {
                     this.audioFalse.play()
                     this.onFirstCard = null
                     this.onSecondCard = null
-                    this.canClick = true
                     this.score.score -= 50
                     tl.to(this.scoreValue, 1, {
                         value: "-=50",
@@ -160,6 +160,7 @@ class Game extends Node {
                             this.score.text = "Score: " + this.scoreValue.value;
                         },
                         onComplete: () => {
+                            this.canClick = true
                             if (this.scoreValue.value == 0) {
                                 this.endGame("You are losing!!")
                                 this.audioLose.play()
@@ -245,7 +246,7 @@ class Game extends Node {
         this.coins = []
         let positionX = []
         let positionY = []
-        let tl = gsap.timeline({ repeat: 5 });
+        let tl = gsap.timeline();
         for(let i = 0; i<=100; i++){
             positionX.push(i*7)
             positionY.push(i*5)
@@ -274,6 +275,8 @@ class Game extends Node {
             this.addChild(coin)
             this.coins.push(coin)
             tl.to(this.coins[i], {opacity:1,rotateY: 180, duration: 1 }, "<");
+            tl.to(this.coins[i], {col:0,y:555, duration: 3 }, "<");
+            
         }
         console.log(this)
     }
